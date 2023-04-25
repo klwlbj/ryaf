@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Utils\Hikvision;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -22,6 +26,14 @@ class Controller extends BaseController
         return view('play');
     }
 
+     public function error()
+    {
+        // 获取token，2小时内有效
+        // echo 1;
+        return view('error/error');
+    }
+
+
     public function realPlay(int $simNo, int $channel)
     {
         $hikvision = new Hikvision();
@@ -29,20 +41,34 @@ class Controller extends BaseController
         $url = $hikvision->getRealPlayUrl($simNo, $channel);
         // dd($url);
         return view('play', ['url' => $url]);
-
     }
 
+    /**
+     * @throws GuzzleException
+     * @throws ValidationException
+     */
     public function playback(Request $request, int $simNo, int $channel)
     {
         // 验证参数
-        $this->validate($request, [
-            'endTime'  => 'required|date_format:Y-m-d H:i:s',
-            'statTime' => 'required|date_format:Y-m-d H:i:s',
+        $validator = Validator::make($request->all(), [
+            'endTime'  => 'required|date_format:YmdHis',
+            'startTime' => 'required|date_format:YmdHis',
         ]);
 
-        $hikvision = new Hikvision();
-        $url = $hikvision->getRealPlayUrl($simNo, $channel);
-        return view('play', ['url' => $url]);
+        if ($validator->fails()) {
+            return redirect('/error')
+                ->withErrors($validator)
+                ->withInput();
+        }
 
+        $startTime = Carbon::createFromFormat('YmdHis', $request->input('startTime'))->format('Y-m-d H:i:s');
+        $endTime = Carbon::createFromFormat('YmdHis', $request->input('endTime'))->format('Y-m-d H:i:s');
+
+        // $startTime = $request->input('startTime');
+        // $endTime   = $request->input('endTime');
+
+        $hikvision = new Hikvision();
+        $url       = $hikvision->getPlaybackUrl($simNo, $channel, $startTime, $endTime);
+        return view('play', ['url' => $url]);
     }
 }

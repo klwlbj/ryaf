@@ -43,6 +43,13 @@ class Hikvision
         return false;
     }
 
+    /**
+     * 获取设备列表
+     * @param int $page
+     * @param int $size
+     * @return mixed|void
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function getEquipments(int $page, int $size)
     {
         if ($this->getAccessToken() !== false) {
@@ -60,10 +67,6 @@ class Hikvision
         } else {
             throw new Error('no token');
         }
-    }
-
-    public function getEquipment($plateNo, $simNo)
-    {
     }
 
     /**
@@ -98,7 +101,17 @@ class Hikvision
         throw new Error('no token');
     }
 
-
+    /**
+     * 获取回放播放链接
+     * @param int $simNo
+     * @param int $channel
+     * @param string $startTime
+     * @param string $endTime
+     * @param int $bitType
+     * @param int $playerType
+     * @return mixed|string
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function getPlaybackUrl(int $simNo, int $channel, string $startTime, string $endTime, int $bitType = 1, int $playerType = 1)
     {
         if ($this->getAccessToken() !== false) {

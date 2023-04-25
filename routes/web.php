@@ -20,6 +20,8 @@ Route::get('/', function () {
 
 Route::get('/test', [Controller::class, 'test']);
 
+Route::get('/error', [Controller::class, 'error']);
+
 Route::get('/realPlay/{simNo}/{channel}', [Controller::class, 'realPlay']);
 
 Route::get('/playBack/{simNo}/{channel}', [Controller::class, 'playBack']);
