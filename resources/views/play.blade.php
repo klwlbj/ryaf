@@ -32,12 +32,12 @@
 <div style="width:704px;margin:0 auto;margin-bottom: 8px;">
     <button type="button" onclick="createPlayer()">CreatePlayer</button>
     <button type="button" onclick="play()">Play</button>
-{{--    <button type="button" onclick="capture()">Capture</button>--}}
-{{--    <button type="button" onclick="playClose()">Close</button>--}}
-{{--    <button type="button" onclick="destroy()">Destroy</button>--}}
-{{--    <button type="button" onclick="toggleFullScreen()">ToggleFullScreen</button>--}}
-{{--    <button type="button" onclick="toggle()">toggle</button>--}}
-{{--    <button type="button" onclick="currentTime()">currentTime</button>--}}
+    <button type="button" onclick="capture()">Capture</button>
+    <button type="button" onclick="playClose()">Close</button>
+    <button type="button" onclick="destroy()">Destroy</button>
+    <button type="button" onclick="toggleFullScreen()">ToggleFullScreen</button>
+    <button type="button" onclick="toggle()">toggle</button>
+    <button type="button" onclick="currentTime()">currentTime</button>
 
 </div>
 <div class="black-bg" style="width:804px;height:576px;margin:0 auto;background-color:#000000;">

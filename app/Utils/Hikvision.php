@@ -10,6 +10,7 @@ class Hikvision
     private const HOST = 'http://183.56.220.198:8088/';
 
     private string $token;
+
     private Client $client;
 
     public function __construct()

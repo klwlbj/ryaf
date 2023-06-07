@@ -20,8 +20,18 @@ Route::get('/', function () {
 
 Route::get('/test', [Controller::class, 'test']);
 
+// 智通知接口
+Route::get('/cogCreateTask/{phone}/{type}/{userName}', [Controller::class, 'createTask']);
+Route::get('/cogGetMessTemplate', [Controller::class, 'getMessTemplate']);
+Route::get('/cogGetFlowTemplate', [Controller::class, 'getFlowTemplate']);
+Route::get('/cogGetShowPhone', [Controller::class, 'getShowPhone']);
+Route::get('/cogGetTaskList/{page?}/{pageSize?}', [Controller::class, 'getTaskList']);
+
+
 Route::get('/error', [Controller::class, 'error']);
 
 Route::get('/realPlay/{simNo}/{channel}', [Controller::class, 'realPlay']);
+
+Route::get('/list/{page}/{size}', [Controller::class, 'list']);
 
 Route::get('/playBack/{simNo}/{channel}', [Controller::class, 'playBack']);
