@@ -81,7 +81,7 @@ class Controller extends BaseController
 
     public function createTask(int $phone, int $type = 1, string $userName = 'test')
     {
-        $now      = now("Asia/Shanghai");
+        $now      = now();
         $callTime = [
             [
                 "dialTimeStart" => $now->format('Y-m-d'),
