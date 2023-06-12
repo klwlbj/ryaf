@@ -102,7 +102,7 @@ class Controller extends BaseController
         return $cog->createTask(
             $now->format('YmdHis'),
             '平安穗粤烟感警报测试，收到请回复',
-            "2132133670", // 暂时写死
+            "02022064268", // 暂时写死
             $callTime,
             $phoneList,
             1,

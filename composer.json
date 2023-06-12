@@ -8,7 +8,6 @@
         "php": "^8.0",
         "fruitcake/laravel-cors": "^2.0.5",
         "guzzlehttp/guzzle": "^7.2",
-        "klwlbj/icbc": "dev-master",
         "laravel/framework": "^9.0",
         "laravel/sanctum": "^2.14",
         "laravel/tinker": "^2.7",
@@ -31,8 +30,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/",
-            "Klwlbj\\Icbc\\": "../composer/icbc/src"
+            "Tests\\": "tests/"
         }
     },
     "scripts": {

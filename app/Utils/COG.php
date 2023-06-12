@@ -45,6 +45,7 @@ class COG
             'timestamp'   => $timeStamp,
         ];
         sleep(1);
+
         $response = $this->client->request('POST', self::HOST . '/getMessTemplate', [
             'headers' => $headers,
         ]);
