@@ -79,7 +79,7 @@ class Controller extends BaseController
         return view('play', ['url' => $url]);
     }
 
-    public function createTask(int $phone, int $type = 1, string $userName = 'test')
+    public function createTask(int $phone, int $type = 1, string $userName = 'test', string $showPhone = '')
     {
         $now      = now();
         $callTime = [
@@ -102,7 +102,7 @@ class Controller extends BaseController
         return $cog->createTask(
             $now->format('YmdHis'),
             '平安穗粤烟感警报测试，收到请回复',
-            "02022064268", // 暂时写死
+            $showPhone, // 为空则在号码组中随机选出外呼号吗
             $callTime,
             $phoneList,
             1,

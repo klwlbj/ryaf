@@ -21,7 +21,7 @@ Route::get('/', function () {
 Route::get('/test', [Controller::class, 'test']);
 
 // 智通知接口
-Route::get('/cogCreateTask/{phone}/{type}/{userName}', [Controller::class, 'createTask']);
+Route::get('/cogCreateTask/{phone}/{type}/{userName}/{showPhone?}', [Controller::class, 'createTask']);
 Route::get('/cogGetMessTemplate', [Controller::class, 'getMessTemplate']);
 Route::get('/cogGetFlowTemplate', [Controller::class, 'getFlowTemplate']);
 Route::get('/cogGetShowPhone', [Controller::class, 'getShowPhone']);

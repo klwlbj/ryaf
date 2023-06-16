@@ -78,7 +78,6 @@ class COG
             return json_decode($response->getBody()->getContents(), true);
         }
         return [];
-
     }
 
     /**
@@ -135,7 +134,7 @@ class COG
              'name'          => 'required|string|max:15',
              'type'          => 'required|int|between:0,2',
              'content'       => 'required|string',
-             'showPhone'     => 'required|string',
+             'showPhone'     => 'string',
              'dialSetting'   => 'required|int',
              'callTime'      => 'required|array',
              'phoneListType' => 'required|int|between:0,1',
@@ -143,74 +142,65 @@ class COG
          ];
          try {
              $this->validateParams(debug_backtrace()[0]['args'], __FUNCTION__, $rules);
+
+             list($sign, $timeStamp) = $this->getSignAndTimeStamp();
+             $headers                = [
+                 'userAccount' => config('cog.account'),
+                 'signType'    => 'md5',
+                 'sign'        => $sign,
+                 'timestamp'   => $timeStamp,
+             ];
+             sleep(1);
+
+             $response = $this->client->request('POST', self::HOST . '/createTask', [
+                 'multipart' => [
+                     [
+                         'name'     => 'name',
+                         'contents' => $name,
+                     ],
+                     [
+                         'name'     => 'type',
+                         'contents' => $type,
+                     ],
+                     [
+                         'name'     => 'content',
+                         'contents' => $content,
+                     ],
+                     [
+                         'name'     => 'showPhone',
+                         'contents' => $showPhone,
+                     ],
+                     [
+                         'name'     => 'dialSetting',
+                         'contents' => $dialSetting,
+                     ],
+                     [
+                         'name'     => 'callTime',
+                         'contents' => json_encode($callTime),
+                     ],
+                     [
+                         'name'     => 'phoneListType',
+                         'contents' => $phoneListType,
+                     ],
+                     [
+                         'name'     => 'phoneList',
+                         'contents' => json_encode($phoneList),
+                     ],
+                     [
+                         'name'     => 'msgTemplateId',
+                         'contents' => 1087874, // 暂时写死
+                     ],
+                 ],
+                 'headers'   => $headers,
+             ]);
+             if ($response->getStatusCode() === 200) {
+                 return json_decode($response->getBody()->getContents(), true);
+             }
+
+             return [];
          } catch (ValidationException $e) {
              dump($e->getMessage());
          }
-
-         list($sign, $timeStamp) = $this->getSignAndTimeStamp();
-         $headers                = [
-             'userAccount' => config('cog.account'),
-             'signType'    => 'md5',
-             'sign'        => $sign,
-             'timestamp'   => $timeStamp,
-         ];
-         sleep(1);
-
-         $response = $this->client->request('POST', self::HOST . '/createTask', [
-             'multipart' => [
-                 [
-                     'name'     => 'name',
-                     'contents' => $name,
-                 ],
-                 [
-                     'name'     => 'type',
-                     'contents' => $type,
-                 ],
-                 [
-                     'name'     => 'content',
-                     'contents' => $content,
-                 ],
-                 [
-                     'name'     => 'showPhone',
-                     'contents' => $showPhone,
-                 ],
-                 [
-                     'name'     => 'dialSetting',
-                     'contents' => $dialSetting,
-                 ],
-                 [
-                     'name'     => 'callTime',
-                     'contents' => json_encode($callTime),
-                 ],
-                 [
-                     'name'     => 'phoneListType',
-                     'contents' => $phoneListType,
-                 ],
-                 [
-                     'name'     => 'phoneList',
-                     'contents' => json_encode($phoneList),
-                 ],
-
-                 [
-                     'name'     => 'redialRange',
-                     'contents' => 0,
-                 ],
-                 [
-                     'name'     => 'redialTimes',
-                     'contents' => 0,
-                 ],
-                 [
-                     'name'     => 'msgTemplateId',
-                     'contents' => 1087874, // 暂时写死
-                 ],
-             ],
-             'headers'   => $headers,
-         ]);
-         if ($response->getStatusCode() === 200) {
-             return json_decode($response->getBody()->getContents(), true);
-         }
-
-         return [];
      }
 
     /**
@@ -260,11 +250,10 @@ class COG
 
         $response = $this->client->request('POST', self::HOST . '/searchTask', [
             'headers' => $headers,
-            'json' => [
-                'page' => $page,
+            'json'    => [
+                'page'     => $page,
                 'pageSize' => $pageSize,
             ],
-
         ]);
         if ($response->getStatusCode() === 200) {
             return json_decode($response->getBody()->getContents(), true);
