@@ -32,7 +32,6 @@ class HappyBirdMqttClient extends Command
         $this->line('welcome to happy bird MQTT client!');
         try {
             $mqtt = MQTT::connection();
-            // $mqtt->connect("lnmqtt.yjkpt.net", 1070);
             $mqtt->subscribe('+/+/+/+/+/+', function (string $topic, string $message) {
                 $this->info("Received message: {$message} on topic {$topic}");
 
@@ -58,13 +57,13 @@ class HappyBirdMqttClient extends Command
     protected function handleLndata($customerName, $projectName, $deviceId, $dataType, $version, array $data = [])
     {
         switch($dataType) {
-            case "rtdata":
+            case "rtdata": // 实时数据
                 break;
-            case "alarm":
+            case "alarm": // 报警数据
                 break;
-            case "heartbeat":
+            case "heartbeat": // 心跳数据
                 break;
-            case "cmd":
+            case "cmd": // 命令下行数据
                 break;
             default:break;
         }
