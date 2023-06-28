@@ -27,7 +27,6 @@ Route::get('/cogGetFlowTemplate', [Controller::class, 'getFlowTemplate']);
 Route::get('/cogGetShowPhone', [Controller::class, 'getShowPhone']);
 Route::get('/cogGetTaskList/{page?}/{pageSize?}', [Controller::class, 'getTaskList']);
 
-
 Route::get('/error', [Controller::class, 'error']);
 
 Route::get('/realPlay/{simNo}/{channel}', [Controller::class, 'realPlay']);
