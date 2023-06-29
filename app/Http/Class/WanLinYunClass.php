@@ -5,6 +5,7 @@ namespace App\Http\Class;
 use App\Models\wlyDevice;
 use Illuminate\Support\Facades\DB;
 use App\Models\wlyDeviceChangeLogs;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class WanLinYunClass
@@ -18,6 +19,11 @@ class WanLinYunClass
         'content'      => 'nullable|string',
         'detail'       => 'required|array',
     ];
+
+    public function common(array $params)
+    {
+        return $this->handleAndSaveParams($params);
+    }
 
     /**
      * @param array $params
@@ -38,8 +44,8 @@ class WanLinYunClass
             'detail.output_type_A'    => 'required|in:0,1', // 0关 1开
             'detail.output_type_B'    => 'required|in:0,1',
             'detail.output_type_C'    => 'required|in:0,1',
-            'detail.temperature'      => 'required|numeric',// 温度 单位：摄氏度
-            'detail.signal_intensity' => 'required|numeric',// 信号强度 单位：dbm
+            'detail.temperature'      => 'required|numeric', // 温度 单位：摄氏度
+            'detail.signal_intensity' => 'required|numeric', // 信号强度 单位：dbm
             'detail.client_id'        => 'required|string',
         ]);
 
@@ -138,6 +144,13 @@ class WanLinYunClass
      */
     private function handleAndSaveParams(array $params)
     {
+        // 打印日志
+        $json      = json_encode($params);
+        $timestamp = now();
+        Log::info("Array: {$json} | Timestamp: {$timestamp}");
+        // 暂时直接返回
+        return [];
+
         // 获取参数值
         $deviceCode = $params['deviceCode'];
 

@@ -8,15 +8,16 @@ use App\Http\Class\WanLinYunClass;
 
 class WanLinYunController extends BaseController
 {
-    public array $rule = [
-        'deviceCode'   => 'required|string|min:1',
-        'deviceType'   => 'required|string|in:603',
-        'deviceStatus' => 'required|in:1,2,3',
-        'netStatus'    => 'required|in:1,2,3',
-        'time'         => 'required|timestamp',
-        'content'      => 'nullable|string',
-        'detail'       => 'required|array',
-    ];
+    public function common(Request $request)
+    {
+        $wanLinYun = new WanLinYunClass();
+        $params    = $request->json()->all();
+        $res       = $wanLinYun->common($params);
+        echo "Inspection pass";
+        die;
+
+        return $this->response($res);
+    }
 
     public function heartbeat(Request $request)
     {
@@ -50,9 +51,9 @@ class WanLinYunController extends BaseController
         return $this->response($res);
     }
 
-    public function remoteControl(Request $request){
+    public function remoteControl($chipcode, $clientId, $runTime, $switchState)
+    {
         $client = new WanLinYun();
-        $json    = $request->json()->all();
-        return $client->remoteControl($json);
+        return $client->remoteControl($chipcode, $clientId, $runTime, $switchState);
     }
 }

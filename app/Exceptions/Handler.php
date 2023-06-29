@@ -60,7 +60,7 @@ class Handler extends ExceptionHandler
             return $this->prepareJsonResponse($request, $e);
         }
 
-        $message    = isDevelopEnv() ? $e->getMessage() : '系统繁忙';
+        $message    = config('app.env') === 'local' ? $e->getMessage() : '系统繁忙';
         $statusCode = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
 
         if ($e instanceof NotFoundHttpException) {

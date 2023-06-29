@@ -25,9 +25,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // 万霖云
+Route::post('/wly/common', [WanLinYunController::class, 'common']);
 Route::post('/heartbeat', [WanLinYunController::class, 'heartbeat']);
 Route::post('/event', [WanLinYunController::class, 'event']);
 Route::post('/offline', [WanLinYunController::class, 'offline']);
 Route::post('/iccid', [WanLinYunController::class, 'iccid']);
 
-Route::post('/remoteControl', [WanLinYunController::class, 'remoteControl']);
+Route::post('/wly/remoteControl/{chipcode}/{clientId}/{runTime}/{switchState}', [WanLinYunController::class, 'remoteControl']);
