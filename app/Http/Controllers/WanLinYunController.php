@@ -12,42 +12,10 @@ class WanLinYunController extends BaseController
     {
         $wanLinYun = new WanLinYunClass();
         $params    = $request->json()->all();
-        $res       = $wanLinYun->common($params);
+        $wanLinYun->common($params);
         echo "Inspection pass";
         die;
 
-        return $this->response($res);
-    }
-
-    public function heartbeat(Request $request)
-    {
-        $wanLinYun = new WanLinYunClass();
-        $params    = $request->json()->all();
-        $res       = $wanLinYun->heartbeat($params);
-        return $this->response($res);
-    }
-
-    public function event(Request $request)
-    {
-        $wanLinYun = new WanLinYunClass();
-        $params    = $request->json()->all();
-        $res       = $wanLinYun->event($params);
-        return $this->response($res);
-    }
-
-    public function offline(Request $request)
-    {
-        $wanLinYun = new WanLinYunClass();
-        $params    = $request->json()->all();
-        $res       = $wanLinYun->offline($params);
-        return $this->response($res);
-    }
-
-    public function iccid(Request $request)
-    {
-        $wanLinYun = new WanLinYunClass();
-        $params    = $request->json()->all();
-        $res       = $wanLinYun->iccid($params);
         return $this->response($res);
     }
 
